@@ -1,15 +1,36 @@
 import React from 'react';
 
-const Post = () => {
+const Post = ({ title, image, content, tags, published }) => {
+
+    if (!published) {
+        return null;
+    }
+
+    const tagColors = {
+        html: 'green',
+        css: 'blue',
+        js: 'red',
+        php: 'purple',
+    };
+
+    const imageUrl = image === '...' || !image ? 'https://picsum.photos/500/300' : image;
+
     return (
-        <div>
+        <div className={`post ${tags.map(tag => tagColors[tag]).join(' ')}`}>
             <div className="post my-2">
                 <div className='upper-card'>
-                    <span className='sample-text'>600 x 400</span>
+                    <img src={imageUrl} alt="Post" />
                 </div>
                 <div className='bottom-card'>
-                    <h5>Titolo del Post</h5>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, quia blanditiis suscipit optio maxime quaerat quam nam impedit aspernatur quas voluptate distinctio repellat quis consequatur excepturi quasi repudiandae?</p>
+                    <h5>{title}</h5>
+                    <p className='margin-0'>{content}</p>
+                    <div className="tags">
+                        {tags.map((tag, index) => (
+                            <span key={index} className={`badge bg-${tagColors[tag]}`}>
+                                {tag}
+                            </span>
+                        ))}
+                    </div>
                     <div className="button">LEGGI DI PIU'</div>
                 </div>
             </div>
